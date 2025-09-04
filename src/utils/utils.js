@@ -18,6 +18,7 @@ export const generateMockUsers = async (cantidad) => {
 export const generateMockPets = async (cantidad) => {
   const pets = Array.from({ length: cantidad }, () => ({
     race: faker.animal.type(),
+    name: faker.animal.petName(),
   }));
 
   return pets;

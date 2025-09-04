@@ -6,10 +6,7 @@ const UserSchema = Schema({
     required: true,
     trim: true,
   },
-  pets: {
-    type: [String],
-    default: [],
-  },
+  pets: [{ type: Schema.Types.ObjectId, ref: "pets" }],
   password: {
     type: String,
     required: true,

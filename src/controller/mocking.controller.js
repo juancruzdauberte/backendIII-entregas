@@ -3,12 +3,13 @@ import { PetModel } from "../models/Pets.model.js";
 import { generateMockPets, generateMockUsers } from "../utils/utils.js";
 
 export async function mockingUsers(req, res) {
+  const { amount } = req.query;
   try {
-    const mockUsers = await generateMockUsers(50);
+    const mockUsers = await generateMockUsers(amount);
     res.status(200).json(mockUsers);
   } catch (error) {
     console.log(error);
-    res.status(500).json({ mesagge: "Error al mockear los usuarios" });
+    res.status(500).json({ message: "Error al mockear los usuarios" });
   }
 }
 
@@ -31,34 +32,6 @@ export async function generateData(req, res) {
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ mesagge: "Error al cargar la data en la bd" });
-  }
-}
-
-export async function getUsers(req, res) {
-  try {
-    const users = await UserModel.find();
-    if (!users) {
-      res.status(400).json({ message: "No hay usuarios en la base de datos" });
-      return;
-    }
-    res.status(200).json(users);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ mesagge: "Error al obtener a los usuarios" });
-  }
-}
-
-export async function getPets(req, res) {
-  try {
-    const pets = await PetModel.find();
-    if (!pets) {
-      res.status(400).json({ message: "No hay usuarios en la base de datos" });
-      return;
-    }
-    res.status(200).json(pets);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ mesagge: "Error al obtener a los usuarios" });
+    res.status(500).json({ message: "Error al cargar la data en la bd" });
   }
 }

@@ -1,0 +1,60 @@
+paths:
+  /api/users:
+    get:
+      summary: Obtener todos los usuarios
+      tags:
+        - Users
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+
+  /api/users/{uid}:
+    get:
+      summary: Obtener una usuario mediante su ID
+      tags:
+        - Users
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+      parameters:
+        - in: path
+          name: uid
+          required: true
+          schema:
+            type: string
+          description: ID del usario a obtener
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: ID del usuario
+          example: "65787285244ab4694ca2e64f"
+        first_name:
+          type: string
+          description: Nombre del usuario
+          example: "Juan Cruz"
+        last_name:
+          type: string
+          description: Apellido del usuario
+          example: "Dauberte"
+        role:
+          type: boolean
+          description: Rol del usuario
+          example: true
+        pets:
+          type: array
+          description: Lista de mascotas del usuario
+          items:
+            $ref: "#/components/schemas/Pet"
