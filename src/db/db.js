@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
-import { config } from "../config/config.js";
+import { envConfig } from "../config/env.config.js";
 import { exit } from "node:process";
 
 export async function connectDB() {
   try {
-    const conn = await mongoose.connect(config.MONGO_URI);
+    const conn = await mongoose.connect(envConfig.MONGO_URI);
     const url = `${conn.connection.host}:${conn.connection.port}`;
     console.log(`MongoDB conectado ${url}`);
   } catch (error) {

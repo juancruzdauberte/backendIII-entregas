@@ -4,14 +4,14 @@ import { PetModel } from "../models/Pets.model.js";
 export async function getPets(req, res) {
   try {
     const pets = await PetModel.find();
-    if (!pets) {
-      res.status(400).json({ message: "No hay mascotas en la base de datos" });
+    if (!pets || pets.length === 0) {
+      res.status(404).json({ message: "No hay mascotas en la base de datos" });
       return;
     }
-    res.status(200).json(pets);
+    return res.status(200).json(pets);
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: "Error al obtener a las mascotas" });
+    return res.status(500).json({ message: "Error al obtener a las mascotas" });
   }
 }
 
@@ -20,32 +20,35 @@ export async function getPetById(req, res) {
     const { pid } = req.params;
 
     const pet = await PetModel.findById(pid);
+
     if (!pet) {
-      res.status(400).json({ message: "No hay mascotas en la base de datos" });
-      return;
+      return res.status(404).json({ message: "Mascota no encontrada" });
     }
     console.log(pet);
-    res.status(200).json(pet);
+    return res.status(200).json(pet);
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: "Error al obtener a las mascotas" });
+    return res.status(500).json({ message: "Error al obtener a las mascotas" });
   }
 }
 
 export async function createPet(req, res) {
   const { race, name } = req.body;
   try {
+    if (!name || !race) {
+      return res.status(400).json({ message: "Faltan datos obligatorios" });
+    }
     const pet = await PetModel.create({
       name,
       race,
     });
-    if (!pet) {
-      res.status(404).json({ message: "Error al crear la mascota" });
-    }
-    res.status(200).json({ message: "Mascota creada exitosamente", pet });
+
+    return res
+      .status(201)
+      .json({ message: "Mascota creada exitosamente", pet });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: "Error al crear la mascota" });
+    return res.status(500).json({ message: "Error al crear la mascota" });
   }
 }
 
@@ -54,9 +57,11 @@ export async function deletePet(req, res) {
   try {
     const pet = await PetModel.findByIdAndDelete(pid);
     if (!pet) {
-      res.status(404).json({ message: "Error al crear la mascota" });
+      return res.status(404).json({ message: "Mascota no encontrada" });
     }
-    res.status(200).json({ message: "Mascota eliminada exitosamente" });
+    return res
+      .status(200)
+      .json({ message: "Mascota eliminada exitosamente", pet });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Error al crear la mascota" });
@@ -69,11 +74,11 @@ export async function petAdopted(req, res) {
 
     const pet = await PetModel.findById(pid);
     if (!pet) {
-      res.status(404).json({ message: "Mascota no encontrada" });
+      return res.status(404).json({ message: "Mascota no encontrada" });
     }
 
     if (pet.isAdopted) {
-      res.status(400).json({ message: "Esta mascota ya fue adoptada" });
+      return res.status(400).json({ message: "Esta mascota ya fue adoptada" });
     }
 
     await UserModel.findByIdAndUpdate(
@@ -88,9 +93,9 @@ export async function petAdopted(req, res) {
       { new: true }
     );
 
-    res.status(200).json({ message: "Mascota adoptada con éxito" });
+    return res.status(200).json({ message: "Mascota adoptada con éxito" });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: "Error al adoptar una mascota" });
+    return res.status(500).json({ message: "Error al adoptar una mascota" });
   }
 }
