@@ -19,12 +19,14 @@ export async function generateData(req, res) {
 
     if (users > 0) {
       const mockUsers = await generateMockUsers(users);
-      await UserModel.insertMany(mockUsers);
+      const usersCreated = await UserModel.insertMany(mockUsers);
+      req.logger.info(`Mascotas creadas con exito: ${usersCreated}`);
     }
 
     if (pets > 0) {
       const mockPets = await generateMockPets(pets);
-      await PetModel.insertMany(mockPets);
+      const petsCreated = await PetModel.insertMany(mockPets);
+      req.logger.info(`Mascotas creadas con exito: ${petsCreated}`);
     }
 
     res.status(201).json({

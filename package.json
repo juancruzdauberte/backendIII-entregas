@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/index.js",
-    "test:pets": "mocha ./test/adoptionPets.test.js"
+    "test": "mocha ./test/adoptionPets.test.js",
+    "test:pets": "mocha ./test/adoptionPets.test.js",
+    "dev": "nodemon src/index.js"
   },
   "keywords": [],
   "author": "",
@@ -20,7 +20,8 @@
     "mongoose": "^8.17.1",
     "nodemon": "^3.1.10",
     "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-express": "^5.0.1"
+    "swagger-ui-express": "^5.0.1",
+    "winston": "^3.17.0"
   },
   "devDependencies": {
     "chai": "^6.0.1",

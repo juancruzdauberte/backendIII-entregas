@@ -5,12 +5,14 @@ import usersRoutes from "../routes/user.routes.js";
 import petsRoutes from "../routes/pets.routes.js";
 import swaggerUi from "swagger-ui-express";
 import { swaggerDocs } from "./swagger.config.js";
+import { middLog } from "./logger.js";
 
 export const app = express();
 
 connectDB();
 app.use(urlencoded({ extended: true }));
 app.use(json());
+app.use(middLog);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use("/api/mocks", mockingRoutes);
 app.use("/api/users", usersRoutes);
