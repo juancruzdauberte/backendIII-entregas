@@ -17,3 +17,6 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use("/api/mocks", mockingRoutes);
 app.use("/api/users", usersRoutes);
 app.use("/api/pets", petsRoutes);
+app.get("/", async function (req, res) {
+  res.send(`<h1>hola</h1>`);
+});

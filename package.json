@@ -6,7 +6,8 @@
   "scripts": {
     "test": "mocha ./test/adoptionPets.test.js",
     "test:pets": "mocha ./test/adoptionPets.test.js",
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon src/index.js",
+    "start": "nodemon src/index.js"
   },
   "keywords": [],
   "author": "",

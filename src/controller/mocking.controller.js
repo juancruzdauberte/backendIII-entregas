@@ -20,7 +20,7 @@ export async function generateData(req, res) {
     if (users > 0) {
       const mockUsers = await generateMockUsers(users);
       const usersCreated = await UserModel.insertMany(mockUsers);
-      req.logger.info(`Mascotas creadas con exito: ${usersCreated}`);
+      req.logger.info(`Usuarios creados con exito: ${usersCreated}`);
     }
 
     if (pets > 0) {
